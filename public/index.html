@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input, button { padding: 10px; margin: 5px; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #f4f4f4; padding: 10px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <form action="/add-task" method="POST">
+        <input type="text" name="task" placeholder="Enter a task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <ul id="taskList"></ul>
+
+    <script>
+        async function loadTasks() {
+            const response = await fetch('/tasks');
+            const tasks = await response.json();
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = tasks.map(task => `<li>${task}</li>`).join('');
+        }
+        loadTasks();
+    </script>
+</body>
+</html>
